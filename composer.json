@@ -1,18 +1,20 @@
 {
-    "name": "opus-online/yii2-giimodel",
-    "description": "Advanced Gii model generator for Yii2",
-    "authors": [
-        {
-            "name": "Ivo Kund",
-            "email": "ivo@opus.ee"
-        }
-    ],
-    "minimum-stability": "dev",
-    "require": {
+	"name": "opus-online/yii2-giimodel",
+	"description": "Advanced Gii model generator for Yii2",
+	"authors": [
+		{
+			"name": "Ivo Kund",
+			"email": "ivo@opus.ee"
+		}
+	],
+	"minimum-stability": "dev",
+	"require": {
 		"yiisoft/yii2-gii": "*"
 	},
 	"autoload": {
-		"psr-0": {"opus\\giimodel\\": ""}
+		"psr-0": {
+			"opus\\giimodel\\": ""
+		}
 	},
 	"target-dir": "opus/giimodel"
 }
