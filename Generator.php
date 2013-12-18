@@ -20,6 +20,7 @@ class Generator extends \yii\gii\generators\model\Generator
 {
     public $tableName = '*';
     public $baseClass = 'common\components\ActiveRecord';
+    public $ns = 'common\models';
 
     /**
      * @inheritdoc
