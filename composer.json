@@ -9,6 +9,9 @@
     ],
     "minimum-stability": "dev",
     "require": {
-
-    }
+		"yiisoft/yii2-gii": "*"
+	},
+	"autoload": {
+		"psr-0": {"opus\\giimodel\\": ""}
+	}
 }
