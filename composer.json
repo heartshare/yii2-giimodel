@@ -1,0 +1,14 @@
+{
+    "name": "opus-online/yii2-giimodel",
+    "description": "Advanced Gii model generator for Yii2",
+    "authors": [
+        {
+            "name": "Ivo Kund",
+            "email": "ivo@opus.ee"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+
+    }
+}
