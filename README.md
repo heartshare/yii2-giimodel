@@ -5,8 +5,8 @@ Generates 2 models classes instead of just one.
 This is useful if you are frequently re-generating your models from a schema and want to separate model definitions from custom functionality.
 
 For example: table `post`
-- `\app\models\base\Post` - contains table meta (relations, property definitions, `tableName`, `rules`, `attributeLabels`)
-- `\app\models\Post` - is left almost empty for custom functionality
+- `\common\models\base\Post` - contains table meta (relations, property definitions, `tableName`, `rules`, `attributeLabels`)
+- `\common\models\Post` - is left almost empty for custom functionality
 
 Installation
 ------------
