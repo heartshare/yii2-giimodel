@@ -1,6 +1,14 @@
 {
 	"name": "opus-online/yii2-giimodel",
 	"description": "Advanced Gii model generator for Yii2",
+	"version": "1.0.0-dev",
+	"keywords": ["yii", "yii2", "gii", "active record", "model"],
+	"licence": "MIT",
+	"homepage": "https://github.com/opus-online/yii2-giimodel/",
+	"support": {
+		"issues": "https://github.com/opus-online/yii2-giimodel/issues",
+		"source": "https://github.com/opus-online/yii2-giimodel/"
+	},
 	"authors": [
 		{
 			"name": "Ivo Kund",
