@@ -20,6 +20,13 @@ class Generator extends \yii\gii\generators\model\Generator
 {
     public $tableName = '*';
     public $baseClass = 'common\components\ActiveRecord';
+    public $ns = 'common\models';
+
+    /**
+     * Maps a table prefix to a namespace (e.g. c_ => \common\models\core)
+     * @var array
+     */
+    public $prefixMap = null;
 
     /**
      * @inheritdoc
@@ -60,18 +67,29 @@ class Generator extends \yii\gii\generators\model\Generator
             $params = [
                 'tableName' => $tableName,
                 'className' => $className,
+                'namespace' => $this->ns,
                 'tableSchema' => $tableSchema,
                 'labels' => $this->generateLabels($tableSchema),
                 'rules' => $this->generateRules($tableSchema),
                 'relations' => isset($relations[$className]) ? $relations[$className] : [],
             ];
+
+            $baseAlias = '@common/models/';
+
+            if (isset($this->prefixMap) && ($prefix = $this->tablePrefixMatches($tableName)))
+            {
+                $ns = trim($this->prefixMap[$prefix], '\\');
+                $baseAlias = sprintf('@%s/', str_replace('\\', '/', $ns));
+                $params['namespace'] = $ns;
+            }
+
             $files[] = new CodeFile(
-                Yii::getAlias('@common/models/' . $className . '.php'),
+                Yii::getAlias($baseAlias . $params['className'] . '.php'),
                 $this->render('model.php', $params)
             );
 
             $cf = new CodeFile(
-                Yii::getAlias('@common/models/base/' . $className . '.php'),
+                Yii::getAlias($baseAlias . 'base/' . $params['className'] . '.php'),
                 $this->render('basemodel.php', $params)
             );
             $cf->operation !== CodeFile::OP_SKIP && $_POST['answers'][$cf->id] = true;
@@ -80,6 +98,32 @@ class Generator extends \yii\gii\generators\model\Generator
         }
 
         return $files;
+    }
+
+    protected function tablePrefixMatches($tableName)
+    {
+        foreach ($this->prefixMap as $prefix => $ns)
+        {
+            if (preg_match(sprintf('/^%s/', preg_quote($prefix)), $tableName))
+            {
+                return $prefix;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * Generates a class name from the specified table name.
+     * @param string $tableName the table name (which may contain schema prefix)
+     * @return string the generated class name
+     */
+    protected function generateClassName($tableName)
+    {
+        if ($prefix = $this->tablePrefixMatches($tableName))
+        {
+            $tableName = substr($tableName, strlen($prefix));
+        }
+        return parent::generateClassName($tableName);
     }
 
     /**
