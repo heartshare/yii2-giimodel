@@ -8,7 +8,7 @@
 echo $form->field($generator, 'tableName');
 
 $nsField = $form->field($generator, 'ns');
-if (!is_null($generator->prefixMap))
+if (!empty($generator->prefixMap))
 {
     foreach ($generator->prefixMap as $prefix => $ns)
     {
