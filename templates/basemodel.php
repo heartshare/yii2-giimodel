@@ -26,8 +26,9 @@ namespace <?= $namespace ?>\base;
 <?php endforeach; ?>
 <?php if (!empty($relations)): ?>
  *
-<?php foreach ($relations as $name => $relation): ?>
- * @property <?= $relation[1] . ($relation[2] ? '[]' : '') . ' $' . lcfirst($name) . "\n" ?>
+<?php foreach ($relations as $name => $relation):
+        $classParts = explode('\\', $name); ?>
+ * @property <?= $relation[1] . ($relation[2] ? '[]' : '') . ' $' . lcfirst($relation[3]) . "\n" ?>
 <?php endforeach; ?>
 <?php endif; ?>
  */
@@ -60,12 +61,12 @@ abstract class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass,
 <?php endforeach; ?>
 		];
 	}
-<?php foreach ($relations as $name => $relation): ?>
+<?php foreach ($relations as $relation): ?>
 
 	/**
 	 * @return \yii\db\ActiveRelation
 	 */
-	public function get<?= $name ?>()
+	public function get<?= $relation[3] ?>()
 	{
 		<?= $relation[0] . "\n" ?>
 	}
