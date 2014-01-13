@@ -27,7 +27,7 @@ class Generator extends \yii\gii\generators\model\Generator
      * Maps a table prefix to a namespace (e.g. c_ => \common\models\core)
      * @var array
      */
-    public $prefixMap = null;
+    public $prefixMap = [];
 
     /**
      * @inheritdoc
