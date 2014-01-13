@@ -21,12 +21,15 @@ class Generator extends \yii\gii\generators\model\Generator
     public $tableName = '*';
     public $baseClass = 'common\components\ActiveRecord';
     public $ns = 'common\models';
+<<<<<<< HEAD
 
     /**
      * Maps a table prefix to a namespace (e.g. c_ => \common\models\core)
      * @var array
      */
     public $prefixMap = null;
+=======
+>>>>>>> b6270430ec969b8cc2d5b6463ca482f2710cd563
 
     /**
      * @inheritdoc
