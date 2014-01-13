@@ -9,6 +9,7 @@ namespace opus\giimodel;
 use Yii;
 use yii\gii\CodeFile;
 use yii\helpers\ArrayHelper;
+use yii\helpers\Inflector;
 
 /**
  * Class Generator
@@ -53,6 +54,22 @@ class Generator extends \yii\gii\generators\model\Generator
         return ['model.php', 'basemodel.php'];
     }
 
+    protected function generateRelations()
+    {
+        $relations = parent::generateRelations();
+
+        foreach ($relations as $className => $classRelations)
+        {
+            foreach ($classRelations as $relationName => $relation)
+            {
+                $nameParts = explode('\\', $relationName);
+                $relations[$className][$relationName][3] = $nameParts[count($nameParts)-1];
+
+            }
+        }
+        return $relations;
+    }
+
     /**
      * @inheritdoc
      */
@@ -60,9 +77,12 @@ class Generator extends \yii\gii\generators\model\Generator
     {
         $files = [];
         $relations = $this->generateRelations();
+
         $db = $this->getDbConnection();
         foreach ($this->getTableNames() as $tableName) {
-            $className = $this->generateClassName($tableName);
+            $fullClassName = $this->generateClassName($tableName);
+            $parts = explode('\\', $fullClassName);
+            $className = $parts[count($parts)-1];
             $tableSchema = $db->getTableSchema($tableName);
             $params = [
                 'tableName' => $tableName,
@@ -71,12 +91,12 @@ class Generator extends \yii\gii\generators\model\Generator
                 'tableSchema' => $tableSchema,
                 'labels' => $this->generateLabels($tableSchema),
                 'rules' => $this->generateRules($tableSchema),
-                'relations' => isset($relations[$className]) ? $relations[$className] : [],
+                'relations' => isset($relations[$fullClassName]) ? $relations[$fullClassName] : [],
             ];
 
             $baseAlias = '@common/models/';
 
-            if (isset($this->prefixMap) && ($prefix = $this->tablePrefixMatches($tableName)))
+            if ($prefix = $this->tablePrefixMatches($tableName))
             {
                 $ns = trim($this->prefixMap[$prefix], '\\');
                 $baseAlias = sprintf('@%s/', str_replace('\\', '/', $ns));
@@ -113,17 +133,19 @@ class Generator extends \yii\gii\generators\model\Generator
     }
 
     /**
-     * Generates a class name from the specified table name.
+     * Generates a class name with namespace prefix from the specified table name.
      * @param string $tableName the table name (which may contain schema prefix)
      * @return string the generated class name
      */
     protected function generateClassName($tableName)
     {
+        $className = parent::generateClassName($tableName);
         if ($prefix = $this->tablePrefixMatches($tableName))
         {
-            $tableName = substr($tableName, strlen($prefix));
+            $ns = trim($this->prefixMap[$prefix], '\\');
+            $className = '\\' . $ns . '\\'  . substr($className, strlen($prefix)-1);
         }
-        return parent::generateClassName($tableName);
+        return $className;
     }
 
     /**
