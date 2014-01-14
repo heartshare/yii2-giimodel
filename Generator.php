@@ -87,6 +87,7 @@ class Generator extends \yii\gii\generators\model\Generator
             $params = [
                 'tableName' => $tableName,
                 'className' => $className,
+                'fullClassName' => $fullClassName,
                 'namespace' => $this->ns,
                 'tableSchema' => $tableSchema,
                 'labels' => $this->generateLabels($tableSchema),
