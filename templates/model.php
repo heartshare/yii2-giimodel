@@ -24,14 +24,23 @@ namespace <?= $namespace ?>;
  */
 class <?= $className ?> extends <?= 'base\\' . $className . "\n" ?>
 {
-	/**
-	 * @inheritdoc
-	 */
-	public function attributeLabels()
-	{
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
         return array_merge(parent::attributeLabels(), [
-            // TODO: add translation overrides
-		]);
-	}
+            // add additional translations
+        ]);
+    }
 
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return array_merge(parent::rules(), [
+            // add additional rules
+        ]);
+    }
 }
