@@ -7,6 +7,7 @@
  * @var string $tableName full table name
  * @var string $className class name
  * @var string $namespace namespace
+ * @var string $fullClassName full class name
  * @var yii\db\TableSchema $tableSchema
  * @var string[] $labels list of attribute labels (name=>label)
  * @var string[] $rules list of validation rules
@@ -31,44 +32,45 @@ namespace <?= $namespace ?>\base;
  * @property <?= $relation[1] . ($relation[2] ? '[]' : '') . ' $' . lcfirst($relation[3]) . "\n" ?>
 <?php endforeach; ?>
 <?php endif; ?>
+ * @method static \yii\db\ActiveQuery|<?=$fullClassName?>|null find($q=null)
  */
 abstract class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . "\n" ?>
 {
-	/**
-	 * @inheritdoc
-	 */
-	public static function tableName()
-	{
-		return '<?= $tableName ?>';
-	}
+    /**
+     * @inheritdoc
+     */
+    public static function tableName()
+    {
+        return '<?= $tableName ?>';
+    }
 
-	/**
-	 * @inheritdoc
-	 */
-	public function rules()
-	{
-		return [<?= "\n\t\t\t" . implode(",\n\t\t\t", $rules) . "\n\t\t" ?>];
-	}
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [<?= "\n\t\t\t" . implode(",\n\t\t\t", $rules) . "\n\t\t" ?>];
+    }
 
-	/**
-	 * @inheritdoc
-	 */
-	public function attributeLabels()
-	{
-		return [
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
 <?php foreach ($labels as $name => $label): ?>
-			<?= "'$name' => '" . addslashes($label) . "',\n" ?>
+            <?= "'$name' => '" . addslashes($label) . "',\n" ?>
 <?php endforeach; ?>
-		];
-	}
+        ];
+    }
 <?php foreach ($relations as $relation): ?>
 
-	/**
-	 * @return \yii\db\ActiveRelation
-	 */
-	public function get<?= $relation[3] ?>()
-	{
-		<?= $relation[0] . "\n" ?>
-	}
+    /**
+     * @return \yii\db\ActiveRelation
+     */
+    public function get<?= $relation[3] ?>()
+    {
+        <?= $relation[0] . "\n" ?>
+    }
 <?php endforeach; ?>
 }
