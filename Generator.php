@@ -54,6 +54,16 @@ class Generator extends \yii\gii\generators\model\Generator
         return ['model.php', 'basemodel.php'];
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function validateNamespace()
+    {
+        if (empty($this->prefixMap)) {
+            parent::validateNamespace();
+        }
+    }
+
     protected function generateRelations()
     {
         $relations = parent::generateRelations();
