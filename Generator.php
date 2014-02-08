@@ -105,7 +105,7 @@ class Generator extends \yii\gii\generators\model\Generator
                 'relations' => isset($relations[$fullClassName]) ? $relations[$fullClassName] : [],
             ];
 
-            $baseAlias = '@common/models/';
+            $baseAlias = sprintf('@%s/', str_replace('\\', '/', $this->ns));
 
             if ($prefix = $this->tablePrefixMatches($tableName))
             {
