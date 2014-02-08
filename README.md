@@ -14,12 +14,6 @@ The esiest way to obtain the code is using Composer: just modify your `composer.
 
 ```json
 {
-	"repositories": [
-		{
-			"type": "vcs",
-			"url": "https://github.com/opus-online/yii2-giimodel"
-		}
-	],
 	"require": {
 		"opus-online/yii2-giimodel": "*"
 	}
