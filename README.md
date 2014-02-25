@@ -47,5 +47,5 @@ Todos
 
 Changelog
 ---------
-1.1.0 Stable
+1.0.0 (next stable)
 - Added support for overriding relation class name
