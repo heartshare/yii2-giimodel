@@ -27,7 +27,7 @@ To add the Gii generator to your project, just add the class `\opus\giimodel\Gen
 'modules' => [
     'gii' => [
         'class' => 'yii\gii\Module',
-        'allowedIPs' => ['10.0.2.2'],
+        'allowedIPs' => ['*'],
         'generators' => [
             'giimodel' => [
                 'class' => '\opus\giimodel\Generator'
@@ -36,3 +36,16 @@ To add the Gii generator to your project, just add the class `\opus\giimodel\Gen
     ]
 ]
 ```
+
+Todos
+-----
+- Support for Search models
+- Remembering relation/base class names
+- Writing attribute PHPDocs from SQL comments
+- Document namespace override parameters
+
+
+Changelog
+---------
+1.1.0 Stable
+- Added support for overriding relation class name

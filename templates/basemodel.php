@@ -6,6 +6,7 @@
  * @var yii\gii\generators\model\Generator $generator
  * @var string $tableName full table name
  * @var string $className class name
+ * @var string $relationClassName relation class name
  * @var string $namespace namespace
  * @var string $fullClassName full class name
  * @var yii\db\TableSchema $tableSchema
@@ -66,7 +67,7 @@ abstract class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass,
 <?php foreach ($relations as $relation): ?>
 
     /**
-     * @return \yii\db\ActiveRelation
+     * @return <?= $relationClassName . "\n"?>
      */
     public function get<?= $relation[3] ?>()
     {

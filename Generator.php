@@ -6,10 +6,11 @@
  */
 
 namespace opus\giimodel;
-use Yii;
+
+use yii\db\ActiveQuery;
 use yii\gii\CodeFile;
 use yii\helpers\ArrayHelper;
-use yii\helpers\Inflector;
+use Yii;
 
 /**
  * Class Generator
@@ -20,11 +21,13 @@ use yii\helpers\Inflector;
 class Generator extends \yii\gii\generators\model\Generator
 {
     public $tableName = '*';
+    public $relationClassName = 'common\components\ActiveRelation';
     public $baseClass = 'common\components\ActiveRecord';
     public $ns = 'common\models';
 
     /**
      * Maps a table prefix to a namespace (e.g. c_ => \common\models\core)
+     *
      * @var array
      */
     public $prefixMap = [];
@@ -36,7 +39,6 @@ class Generator extends \yii\gii\generators\model\Generator
     {
         return 'Advanced Model Generator';
     }
-
 
     /**
      * @inheritdoc
@@ -64,17 +66,25 @@ class Generator extends \yii\gii\generators\model\Generator
         }
     }
 
+    /**
+     * @inheritdoc
+     */
+    public function stickyAttributes()
+    {
+        return array_merge(parent::stickyAttributes(), ['relationClassName']);
+    }
+
+    /**
+     * @inheritdoc
+     */
     protected function generateRelations()
     {
         $relations = parent::generateRelations();
 
-        foreach ($relations as $className => $classRelations)
-        {
-            foreach ($classRelations as $relationName => $relation)
-            {
+        foreach ($relations as $className => $classRelations) {
+            foreach ($classRelations as $relationName => $relation) {
                 $nameParts = explode('\\', $relationName);
-                $relations[$className][$relationName][3] = $nameParts[count($nameParts)-1];
-
+                $relations[$className][$relationName][3] = $nameParts[count($nameParts) - 1];
             }
         }
         return $relations;
@@ -92,12 +102,13 @@ class Generator extends \yii\gii\generators\model\Generator
         foreach ($this->getTableNames() as $tableName) {
             $fullClassName = $this->generateClassName($tableName);
             $parts = explode('\\', $fullClassName);
-            $className = $parts[count($parts)-1];
+            $className = $parts[count($parts) - 1];
             $tableSchema = $db->getTableSchema($tableName);
             $params = [
                 'tableName' => $tableName,
                 'className' => $className,
                 'fullClassName' => $fullClassName,
+                'relationClassName' => $this->relationClassName,
                 'namespace' => $this->ns,
                 'tableSchema' => $tableSchema,
                 'labels' => $this->generateLabels($tableSchema),
@@ -107,8 +118,7 @@ class Generator extends \yii\gii\generators\model\Generator
 
             $baseAlias = sprintf('@%s/', str_replace('\\', '/', $this->ns));
 
-            if ($prefix = $this->tablePrefixMatches($tableName))
-            {
+            if ($prefix = $this->tablePrefixMatches($tableName)) {
                 $ns = trim($this->prefixMap[$prefix], '\\');
                 $baseAlias = sprintf('@%s/', str_replace('\\', '/', $ns));
                 $params['namespace'] = $ns;
@@ -131,12 +141,14 @@ class Generator extends \yii\gii\generators\model\Generator
         return $files;
     }
 
+    /**
+     * @param $tableName
+     * @return bool|string
+     */
     protected function tablePrefixMatches($tableName)
     {
-        foreach ($this->prefixMap as $prefix => $ns)
-        {
-            if (preg_match(sprintf('/^%s/', preg_quote($prefix)), $tableName))
-            {
+        foreach ($this->prefixMap as $prefix => $ns) {
+            if (preg_match(sprintf('/^%s/', preg_quote($prefix)), $tableName)) {
                 return $prefix;
             }
         }
@@ -145,16 +157,16 @@ class Generator extends \yii\gii\generators\model\Generator
 
     /**
      * Generates a class name with namespace prefix from the specified table name.
+     *
      * @param string $tableName the table name (which may contain schema prefix)
      * @return string the generated class name
      */
     protected function generateClassName($tableName)
     {
         $className = parent::generateClassName($tableName);
-        if ($prefix = $this->tablePrefixMatches($tableName))
-        {
+        if ($prefix = $this->tablePrefixMatches($tableName)) {
             $ns = trim($this->prefixMap[$prefix], '\\');
-            $className = '\\' . $ns . '\\'  . substr($className, strlen($prefix)-1);
+            $className = '\\' . $ns . '\\' . substr($className, strlen($prefix) - 1);
         }
         return $className;
     }
@@ -164,8 +176,21 @@ class Generator extends \yii\gii\generators\model\Generator
      */
     public function attributeLabels()
     {
-        return ArrayHelper::merge(parent::attributeLabels(), [
-            'tableName' => 'Table pattern'
-        ]);
+        return ArrayHelper::merge(parent::attributeLabels(),
+            [
+                'tableName' => 'Table pattern',
+                'relationClassName' => 'Relation class',
+            ]);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return array_merge(parent::rules(),
+            [
+                [['relationClassName'], 'validateClass', 'params' => ['extends' => ActiveQuery::className()]],
+            ]);
     }
 } 

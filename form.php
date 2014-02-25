@@ -8,10 +8,8 @@
 echo $form->field($generator, 'tableName');
 
 $nsField = $form->field($generator, 'ns');
-if (!empty($generator->prefixMap))
-{
-    foreach ($generator->prefixMap as $prefix => $ns)
-    {
+if (!empty($generator->prefixMap)) {
+    foreach ($generator->prefixMap as $prefix => $ns) {
         $items[] = sprintf('<tt>%s</tt> » <tt>%s</tt>', $prefix, $ns);
     }
     $html = \yii\helpers\Html::ul($items, ['encode' => false]);
@@ -20,6 +18,7 @@ if (!empty($generator->prefixMap))
 echo $nsField;
 
 echo $form->field($generator, 'baseClass');
+echo $form->field($generator, 'relationClassName');
 echo $form->field($generator, 'db');
 echo $form->field($generator, 'generateRelations')->checkbox();
 echo $form->field($generator, 'generateLabelsFromComments')->checkbox();
