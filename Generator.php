@@ -21,7 +21,7 @@ use Yii;
 class Generator extends \yii\gii\generators\model\Generator
 {
     public $tableName = '*';
-    public $relationClassName = 'common\components\ActiveRelation';
+    public $relationClassName = 'common\components\ActiveQuery';
     public $baseClass = 'common\components\ActiveRecord';
     public $ns = 'common\models';
 
