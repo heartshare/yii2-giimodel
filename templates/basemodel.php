@@ -50,7 +50,7 @@ abstract class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass,
      */
     public function rules()
     {
-        return [<?= "\n\t\t\t" . implode(",\n\t\t\t", $rules) . "\n\t\t" ?>];
+        return [<?= "\n" . str_repeat('    ', 3) . implode(",\n" . str_repeat('    ', 3), $rules) . "\n" . str_repeat('    ', 2) ?>];
     }
 
     /**
