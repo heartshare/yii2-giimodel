@@ -41,7 +41,6 @@ Todos
 -----
 - Support for Search models
 - Remembering relation/base class names
-- Writing attribute PHPDocs from SQL comments
 - Document namespace override parameters
 
 
@@ -51,3 +50,4 @@ Changelog
 - Added support for overriding relation class name
 - Fixed issue with preceding slash of relation class namespace
 - Fixed issue where unselected base models still got generated
+- Added generating attribute PHPDoc from SQL field comments
