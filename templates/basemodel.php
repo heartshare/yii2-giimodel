@@ -67,7 +67,7 @@ abstract class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass,
 <?php foreach ($relations as $relation): ?>
 
     /**
-     * @return <?= $relationClassName . "\n"?>
+     * @return <?= '\\' . ltrim($relationClassName) . "\n"?>
      */
     public function get<?= $relation[3] ?>()
     {

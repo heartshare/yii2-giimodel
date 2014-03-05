@@ -49,3 +49,5 @@ Changelog
 ---------
 1.0.0 (next stable)
 - Added support for overriding relation class name
+- Fixed issue with preceding slash of relation class namespace
+- Fixed issue where unselected base models still got generated

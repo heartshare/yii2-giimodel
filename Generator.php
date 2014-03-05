@@ -133,7 +133,10 @@ class Generator extends \yii\gii\generators\model\Generator
                 Yii::getAlias($baseAlias . 'base/' . $params['className'] . '.php'),
                 $this->render('basemodel.php', $params)
             );
-            $cf->operation !== CodeFile::OP_SKIP && $_POST['answers'][$cf->id] = true;
+            // use this little hack to always preselect all base modules (if they are not explicitly unchecked)
+            if (isset($_POST['preview']) && $cf->operation !== CodeFile::OP_SKIP) {
+                $_POST['answers'][$cf->id] = true;
+            }
 
             $files[] = $cf;
         }
