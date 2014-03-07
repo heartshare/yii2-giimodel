@@ -33,7 +33,7 @@ namespace <?= $namespace ?>\base;
  * @property <?= $relation[1] . ($relation[2] ? '[]' : '') . ' $' . lcfirst($relation[3]) . "\n" ?>
 <?php endforeach; ?>
 <?php endif; ?>
- * @method static \yii\db\ActiveQuery|<?=$fullClassName?>|null find($q=null)
+ * @method static <?='\\' . ltrim($relationClassName)?>|<?=$fullClassName?>|null find($q=null)
  */
 abstract class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . "\n" ?>
 {
