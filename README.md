@@ -51,3 +51,4 @@ Changelog
 - Fixed issue with preceding slash of relation class namespace
 - Fixed issue where unselected base models still got generated
 - Added generating attribute PHPDoc from SQL field comments
+- Added support for yii2 1.0-beta
