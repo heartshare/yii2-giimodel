@@ -24,7 +24,7 @@ namespace <?= $namespace ?>\base;
  * This is the base model class for table "<?= $tableName ?>".
  *
 <?php foreach ($tableSchema->columns as $column): ?>
- * @property <?= "{$column->phpType} \${$column->name} {$column->comment}\n" ?>
+ * @property <?= "{$column->phpType} \${$column->name}" . ($column->comment ? " {$column->comment}" : '') . "\n" ?>
 <?php endforeach; ?>
 <?php if (!empty($relations)): ?>
  *
@@ -33,7 +33,9 @@ namespace <?= $namespace ?>\base;
  * @property <?= $relation[1] . ($relation[2] ? '[]' : '') . ' $' . lcfirst($relation[3]) . "\n" ?>
 <?php endforeach; ?>
 <?php endif; ?>
- * @method static \yii\db\ActiveQuery|<?=$fullClassName?>|null find($q=null)
+ * @method static <?='\\' . ltrim($relationClassName)?> find()
+ * @method static <?=$fullClassName?>|null find(mixed $condition)
+ * @method static <?=$fullClassName?>[] findAll(mixed $condition)
  */
 abstract class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . "\n" ?>
 {
