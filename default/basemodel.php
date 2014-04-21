@@ -34,8 +34,8 @@ namespace <?= $namespace ?>\base;
 <?php endforeach; ?>
 <?php endif; ?>
  * @method static <?='\\' . ltrim($relationClassName)?> find()
- * @method static <?=$fullClassName?>|null find(mixed $condition)
- * @method static <?=$fullClassName?>[] findAll(mixed $condition)
+ * @method static <?=$fullClassName?>|null findOne($condition)
+ * @method static <?=$fullClassName?>[] findAll($condition)
  */
 abstract class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass, '\\') . "\n" ?>
 {
