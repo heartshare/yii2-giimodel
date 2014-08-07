@@ -16,7 +16,6 @@
 			"email": "ivo@opus.ee"
 		}
 	],
-	"minimum-stability": "dev",
 	"require": {
 		"yiisoft/yii2-gii": "*"
 	},
