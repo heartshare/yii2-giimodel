@@ -1,11 +1,11 @@
 {
 	"name": "opus-online/yii2-giimodel",
 	"description": "Advanced Gii model generator for Yii2",
-	"version": "1.0.0-beta",
+	"version": "1.0.0",
 	"keywords": ["yii", "yii2", "gii", "active record", "model"],
 	"licence": "MIT",
-    "type": "yii2-extension",
-    "homepage": "https://github.com/opus-online/yii2-giimodel/",
+	"type": "yii2-extension",
+	"homepage": "https://github.com/opus-online/yii2-giimodel/",
 	"support": {
 		"issues": "https://github.com/opus-online/yii2-giimodel/issues",
 		"source": "https://github.com/opus-online/yii2-giimodel/"
