@@ -1,7 +1,7 @@
 {
 	"name": "opus-online/yii2-giimodel",
 	"description": "Advanced Gii model generator for Yii2",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"keywords": ["yii", "yii2", "gii", "active record", "model"],
 	"licence": "MIT",
 	"type": "yii2-extension",

@@ -10,12 +10,12 @@ For example: table `post`
 
 Installation
 ------------
-The esiest way to obtain the code is using Composer: just modify your `composer.json` to add a custom repository (linking to this project) and require the libary.
+The easiest way to obtain the code is using Composer: just modify your `composer.json` to add a custom repository (linking to this project) and require the libary.
 
 ```json
 {
 	"require": {
-		"opus-online/yii2-giimodel": "*"
+		"opus-online/yii2-giimodel": "1.1.*"
 	}
 }
 ```
@@ -30,7 +30,12 @@ To add the Gii generator to your project, just add the class `\opus\giimodel\Gen
         'allowedIPs' => ['*'],
         'generators' => [
             'giimodel' => [
-                'class' => '\opus\giimodel\Generator'
+                'class' => '\opus\giimodel\Generator',
+                'prefixMap' => [
+                    'tbl_user_' => 'user',
+                    'tbl_' => '',
+                    'ext_' => 'sub/dir',
+                ]
             ]
         ]
     ]
@@ -46,6 +51,10 @@ Todos
 
 Changelog
 ---------
+1.1.0
+- Now possible to group models using prefixes and subfolders
+- Intra-context relation getters shortened
+
 1.0.0 
 - Added support for overriding relation class name
 - Fixed issue with preceding slash of relation class namespace

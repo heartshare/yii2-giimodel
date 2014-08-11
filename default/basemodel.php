@@ -30,8 +30,9 @@ namespace <?= $namespace ?>\base;
  *
 <?php foreach ($relations as $name => $relation):
         $classParts = explode('\\', $name); ?>
- * @property <?= $relation[1] . ($relation[2] ? '[]' : '') . ' $' . lcfirst($relation[3]) . "\n" ?>
+ * @property <?= $relation[1] . ($relation[2] ? '[]' : '') . ' $' . lcfirst($name) . "\n" ?>
 <?php endforeach; ?>
+
 <?php endif; ?>
  * @method static <?='\\' . ltrim($relationClassName)?> find()
  * @method static <?=$fullClassName?>|null findOne($condition)
@@ -66,12 +67,13 @@ abstract class <?= $className ?> extends <?= '\\' . ltrim($generator->baseClass,
 <?php endforeach; ?>
         ];
     }
-<?php foreach ($relations as $relation): ?>
+<?php foreach ($relations as $name => $relation):
+    ?>
 
     /**
      * @return <?= '\\' . ltrim($relationClassName) . "\n"?>
      */
-    public function get<?= $relation[3] ?>()
+    public function get<?= $name ?>()
     {
         <?= $relation[0] . "\n" ?>
     }
