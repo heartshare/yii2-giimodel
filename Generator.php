@@ -96,14 +96,12 @@ class Generator extends \yii\gii\generators\model\Generator
         foreach ($db->getSchema()->getTableSchemas($schemaName) as $table) {
             $tableName = $table->name;
             $className = $this->generateClassName($tableName);
-
             foreach ($table->foreignKeys as $refs) {
                 $refTable = $refs[0];
                 unset($refs[0]);
                 $fks = array_keys($refs);
                 $refClassName = $this->generateClassName($refTable);
                 $refClassNameShortTag = Inflector::id2camel(substr(trim($refClassName, '\\'), strlen(trim($this->ns, '\\'))), '\\');
-
 
                 // skip audit fields
                 if (isset($refs['created_by']) || isset($refs['deleted_by']) || isset($refs['updated_by'])) {
@@ -114,7 +112,6 @@ class Generator extends \yii\gii\generators\model\Generator
                 $link = $this->generateRelationLink(array_flip($refs));
 
                 $relationName = $this->generateRelationName($relations, $className, $table, $fks[0], false);
-
                 $relations[$className][$relationName] = [
                     "return \$this->hasOne($refClassName::className(), $link);",
                     $refClassName,
@@ -134,9 +131,12 @@ class Generator extends \yii\gii\generators\model\Generator
                     }
                 }
                 $link = $this->generateRelationLink($refs);
-                $relationTag = Inflector::id2camel(substr(trim($className, '\\'), strlen(trim($this->ns, '\\'))), '\\');
+                if (strpos($className, '\\') === false) {
+                    $relationTag = $className;
+                } else {
+                    $relationTag = Inflector::id2camel(substr(trim($className, '\\'), strlen(trim($this->ns, '\\'))), '\\');
+                }
                 $relationName = $this->generateRelationName($relations, $refClassName, $refTable, $relationTag, $hasMany);
-
                 // rename User->UserProfile relations to User->Profile
                 if (strlen($relationName) > strlen(Inflector::pluralize($refClassNameShortTag)) && substr($relationName, 0, strlen($refClassNameShortTag)) === $refClassNameShortTag) {
                     $relationName = substr($relationName, strlen($refClassNameShortTag));
@@ -159,9 +159,8 @@ class Generator extends \yii\gii\generators\model\Generator
 
             $link = $this->generateRelationLink([$fks[$table->primaryKey[1]][1] => $table->primaryKey[1]]);
             $viaLink = $this->generateRelationLink([$table->primaryKey[0] => $fks[$table->primaryKey[0]][1]]);
+            $relationName = $this->generateRelationName($relations, $className0, $db->getTableSchema($table0), $table->primaryKey[1], true);
 
-            $relationTag = Inflector::id2camel(substr(trim($className0, '\\'), strlen(trim($this->ns, '\\'))), '\\');
-            $relationName = $this->generateRelationName($relations, $className0, $db->getTableSchema($table0), $relationTag, true);
             $relations[$className0][$relationName] = [
                 "return \$this->hasMany($className1::className(), $link)->viaTable('{$table->name}', $viaLink);",
                 $className1,
@@ -170,8 +169,7 @@ class Generator extends \yii\gii\generators\model\Generator
 
             $link = $this->generateRelationLink([$fks[$table->primaryKey[0]][1] => $table->primaryKey[0]]);
             $viaLink = $this->generateRelationLink([$table->primaryKey[1] => $fks[$table->primaryKey[1]][1]]);
-            $relationName = $this->generateRelationName($relations, $className1, $db->getTableSchema($table1), $relationTag, true);
-
+            $relationName = $this->generateRelationName($relations, $className1, $db->getTableSchema($table1), $table->primaryKey[0], true);
             $relations[$className1][$relationName] = [
                 "return \$this->hasMany($className0::className(), $link)->viaTable('{$table->name}', $viaLink);",
                 $className0,
